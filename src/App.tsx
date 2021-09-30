@@ -1,24 +1,66 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component } from 'react';
 import './App.css';
 
-function App() {
+type CounterState = {
+  count: number
+}
+type CounterProps = {
+  // readonly title?: string 
+  // в новых версиях ТС реадонли ставиться автоматом
+
+  title?: string
+}
+
+class Counter extends Component< CounterProps, CounterState  > {
+  constructor(props: CounterProps){
+    super(props)
+    this.state = {
+      count: 0 
+    }
+  }
+  static defaultProps: CounterProps = {
+    title: "Default counter: "
+  }
+  static getDerivededStateFromProps(props: CounterProps, state: CounterState): CounterState | null{
+    return true ? {count: 2} : null
+  }
+  componentDidMount():void{
+
+  }
+
+  shouldComponentUpdate(nextprops: CounterProps, nextState: CounterState){
+    return true
+  }
+  handleClick = () => {
+    this.setState( ({count} )=>({
+      count: ++count
+    }))
+  }
+  render(){
+    return (
+      <div>
+        
+        <h1>{this.state.count}</h1>
+        <button onClick={this.handleClick}>Click</button>
+      </div>
+
+    )
+  }
+}
+//типы
+type TitleProps = {
+  title: string,
+  //необязательный параметр
+  test?: string
+}
+//функция должна что то возвращать
+const Title = ({title, test = 'react'}: TitleProps ) => <h1>{title} {test}</h1>
+
+const  App =()=> {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <Title title="test" test="vueact"/>
+    <Counter/>
     </div>
   );
 }
