@@ -11,7 +11,7 @@ type CounterProps = {
   title?: string
 }
 
-class Counter extends Component< CounterProps, CounterState  > {
+class Counter extends Component < CounterProps, CounterState  > {
   constructor(props: CounterProps){
     super(props)
     this.state = {
@@ -31,7 +31,11 @@ class Counter extends Component< CounterProps, CounterState  > {
   shouldComponentUpdate(nextprops: CounterProps, nextState: CounterState){
     return true
   }
-  handleClick = () => {
+  // e - Syntetic Event (React.SynteticEvent)
+  // e - MouseEvent
+  // Дженерик элемент плюс тип элемента на кот отлавливаем событие
+  handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    console.log(e);
     this.setState( ({count} )=>({
       count: ++count
     }))
